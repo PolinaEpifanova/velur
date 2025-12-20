@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/market.css">
+    <link rel="icon" href="assets/photo/логотип Velur.png" type="image/png">
+    <title>Velur - Магазин женской одежды</title>
+</head>
+<body>
+    <header>
+        <nav aria-label="Главное меню">
+            <div class="nav-left">
+                <img id="logo" src="assets/photo/логотип Velur.png" alt="Логотип Velur">
+                <ul class="main-menu">
+                    <li><a href="/" class="active">Каталог</a></li>
+                    <li><a href="/about">О нас</a></li>
+                    <li><a href="#clothing">Одежда</a></li>
+                    <li><a href="#accessories">Аксессуары</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <ul class="user-menu">
+                    {{ if .Username }}
+                        <li><span class="welcome-text">Добро пожаловать, {{ .Username }}!</span></li>
+                        {{ if eq .Role "admin" }}
+                            <li><a href="/admin" class="admin-link">Админ-панель</a></li>
+                        {{ end }}
+                        <li><a href="/logout" class="logout-link">Выйти</a></li>
+                    {{ else }}
+                        <li><a href="/login" class="login-link">Войти</a></li>
+                        <li><a href="/registration" class="register-link">Регистрация</a></li>
+                    {{ end }}
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h1 class="page-title">Добро пожаловать в Velur</h1>
+        <p class="subtitle">Модная женская одежда и аксессуары</p>
+
+        <h2 class="section-title" id="clothing">Новая коллекция одежды</h2>
+        <section id="clothing">
+            {{ range .Clothes }}
+            <div class="product"> 
+                <div class="product-image">
+                    <img src="{{ .ImageURL }}" alt="{{ .Name }}">
+                </div>
+                <div class="product-info">
+                    <div class="normalPrice">
+                        <span>{{ printf "%.2f" .Price }} ₽</span>
+                    </div>
+                    <h3 class="namee">{{ .Name }}</h3>
+                    <div class="product-details">
+                        <span class="size">Размер: {{ .Size }}</span>
+                        <span class="color">Цвет: {{ .Color }}</span>
+                    </div>
+                    <div class="button-container">
+                        <button class="button details-button" onclick="window.location.href='/clothing/{{ .ID }}';">Подробнее</button>
+                        <button class="button order-button" onclick="window.location.href='/order/clothing/{{ .ID }}';">Заказать</button>
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+        </section>
+
+        <h2 class="section-title" id="accessories">Аксессуары</h2>
+        <section id="accessories">
+            {{ range .Accessories }}
+            <div class="product"> 
+                <div class="product-image">
+                    <img src="{{ .ImageURL }}" alt="{{ .Name }}">
+                </div>
+                <div class="product-info">
+                    <div class="normalPrice">
+                        <span>{{ printf "%.2f" .Price }} ₽</span>
+                    </div>
+                    <h3 class="namee">{{ .Name }}</h3>
+                    <div class="product-details">
+                        <span class="type">{{ .Type }}</span>
+                        <span class="color">Цвет: {{ .Color }}</span>
+                    </div>
+                    <div class="button-container">
+                        <button class="button details-button" onclick="window.location.href='/accessory/{{ .ID }}';">Подробнее</button>
+                        <button class="button order-button" onclick="window.location.href='/order/accessory/{{ .ID }}';">Заказать</button>
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 Velur - Магазин женской одежды. Все права защищены.</p>
+        <p class="contact">Телефон: +7 (XXX) XXX-XX-XX | Email: info@velur.ru</p>
+    </footer>
+</body>
+</html>

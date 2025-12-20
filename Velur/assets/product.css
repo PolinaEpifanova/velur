@@ -1,0 +1,365 @@
+/* product.css - Страница карточки товара */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Lato:wght@300;400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', sans-serif;
+    line-height: 1.6;
+    background-color: #FAF7F0;
+    color: #2D2D2D;
+}
+
+/* Шапка */
+header {
+    background: #FFFFFF;
+    box-shadow: 0 2px 15px rgba(106, 44, 69, 0.08);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.but {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    align-items: center;
+}
+
+.but li {
+    display: inline;
+}
+
+.but a {
+    text-decoration: none;
+    color: #2D2D2D;
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    padding: 5px 0;
+    position: relative;
+}
+
+.but a:hover {
+    color: #9D4469;
+}
+
+.but a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #9D4469;
+    transition: width 0.3s ease;
+}
+
+.but a:hover::after {
+    width: 60%;
+}
+
+/* Основная секция с товаром */
+.Otstup {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Контейнер для изображения товара */
+.product-image {
+    background: #FFFFFF;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 25px rgba(106, 44, 69, 0.1);
+    border: 1px solid #E8DFD0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    transition: transform 0.3s ease;
+    height: 400px;
+}
+
+.product-image:hover {
+    transform: translateY(-5px);
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    transition: transform 0.5s ease;
+}
+
+.product-image:hover img {
+    transform: scale(1.02);
+}
+
+/* Блок с информацией о товаре */
+.product-info {
+    background: #FFFFFF;
+    padding: 30px 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(106, 44, 69, 0.1);
+    border: 1px solid #E8DFD0;
+    position: sticky;
+    top: 100px;
+    align-self: start;
+}
+
+.product-name {
+    color: #6A2C45;
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.product-price {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #9D4469;
+    margin-bottom: 20px;
+}
+
+.product-description {
+    color: #555555;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 35px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #E8DFD0;
+}
+
+/* Характеристики товара */
+.product-characteristics {
+    margin-bottom: 35px;
+}
+
+.product-characteristics h3 {
+    color: #6A2C45;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+.product-characteristics hr {
+    border: none;
+    height: 1px;
+    background: #E8DFD0;
+    margin-bottom: 20px;
+}
+
+.characteristics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.char-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #F0F0F0;
+    transition: all 0.3s ease;
+}
+
+.char-item:hover {
+    background: #FAF7F0;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.char-label {
+    color: #555555;
+    font-weight: 600;
+}
+
+.char-value {
+    color: #2D2D2D;
+    font-weight: 700;
+}
+
+/* Кнопка покупки */
+.buy-button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #9D4469 0%, #6A2C45 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+}
+
+.buy-button:hover {
+    background: linear-gradient(135deg, #8B3A5C 0%, #5A243A 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(157, 68, 105, 0.3);
+}
+
+/* Ссылка назад */
+.back-link {
+    display: block;
+    text-align: center;
+    color: #9D4469;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 15px;
+    transition: all 0.3s ease;
+    border: 2px dashed #E8DFD0;
+    border-radius: 8px;
+}
+
+.back-link:hover {
+    color: #6A2C45;
+    border-color: #9D4469;
+    background: rgba(157, 68, 105, 0.05);
+}
+
+/* Футер */
+.footer {
+    background: #6A2C45;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 40px 20px;
+    margin-top: 60px;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.footer a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+/* Анимации */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .Otstup {
+        max-width: 900px;
+        gap: 30px;
+    }
+    
+    .product-image {
+        height: 350px;
+    }
+}
+
+@media (max-width: 768px) {
+    .Otstup {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin: 20px auto;
+    }
+    
+    .product-image {
+        height: 300px;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .product-info {
+        padding: 25px 20px;
+        position: static;
+    }
+    
+    .product-name {
+        font-size: 1.8rem;
+    }
+    
+    .product-price {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .Otstup {
+        margin: 15px auto;
+        padding: 0 15px;
+    }
+    
+    .but {
+        gap: 15px;
+    }
+    
+    .but a {
+        font-size: 14px;
+    }
+    
+    .product-image {
+        height: 250px;
+        padding: 15px;
+    }
+    
+    .product-name {
+        font-size: 1.6rem;
+    }
+    
+    .product-price {
+        font-size: 1.4rem;
+    }
+    
+    .product-info {
+        padding: 20px 15px;
+    }
+    
+    .characteristics-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .product-description {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+}

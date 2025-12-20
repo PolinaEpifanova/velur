@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/auth.css">
+    <title>Регистрация - Velur</title>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>Создание аккаунта</h1>
+            <p class="auth-subtitle">Присоединяйтесь к сообществу Velur</p>
+        </div>
+
+        <div class="auth-form-container">
+            <form action="/registration" method="POST" class="auth-form">
+                {{ if .ErrorMessage }}
+                    <div class="error-message">
+                        {{ .ErrorMessage }}
+                    </div>
+                {{ end }}
+                
+                <div class="form-group">
+                    <label for="username">Имя пользователя*</label>
+                    <input type="text" id="username" name="username" 
+                           placeholder="Придумайте логин" 
+                           class="form-input" required>
+                    <small class="input-hint">От 3 до 20 символов</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Электронная почта*</label>
+                    <input type="email" id="email" name="email" 
+                           placeholder="example@email.com" 
+                           class="form-input" required>
+                    <small class="input-hint">На этот email придет подтверждение</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Пароль*</label>
+                    <input type="password" id="password" name="password" 
+                           placeholder="Не менее 6 символов" 
+                           class="form-input" required>
+                    <small class="input-hint">Не менее 6 символов</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Подтвердите пароль*</label>
+                    <input type="password" id="confirm_password" name="confirm_password" 
+                           placeholder="Повторите пароль" 
+                           class="form-input" required>
+                </div>
+
+                <div class="form-options">
+                    <label class="terms-agreement">
+                        <input type="checkbox" name="terms" required>
+                        Я соглашаюсь с <a href="#terms">условиями использования</a> и 
+                        <a href="#privacy">политикой конфиденциальности</a>
+                    </label>
+                </div>
+
+                <button type="submit" class="auth-button">Создать аккаунт</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Уже есть аккаунт? <a href="/login">Войти</a></p>
+                <p class="back-home"><a href="/">← Вернуться на главную</a></p>
+            </div>
+        </div>
+
+        <div class="auth-benefits">
+            <h3>Преимущества регистрации:</h3>
+            <ul class="benefits-list">
+                <li>Быстрое оформление заказов в 1 клик</li>
+                <li>Сохранение избранных товаров</li>
+                <li>История всех покупок</li>
+                <li>Эксклюзивные предложения и скидки</li>
+                <li>Персональный менеджер</li>
+                <li>Отслеживание статуса заказов</li>
+                <li>Накопительная система бонусов</li>
+                <li>Персональные рекомендации по стилю</li>
+            </ul>
+
+            <div class="trust-signals">
+                <h4>Нам доверяют:</h4>
+                <div class="trust-icons">
+                    <div class="trust-item">
+                        <span class="trust-icon">🔒</span>
+                        <span class="trust-text">Безопасные платежи</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-icon">👍</span>
+                        <span class="trust-text">Гарантия качества</span>
+                    </div>
+                    <div class="trust-item">
+                        <span class="trust-icon">📞</span>
+                        <span class="trust-text">Поддержка 24/7</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="auth-page-footer">
+        <p>© 2025 Velur - Магазин женской одежды. Все права защищены.</p>
+        <p><a href="/about">О нас</a> | <a href="#contact">Контакты</a> | <a href="#privacy">Политика конфиденциальности</a></p>
+    </footer>
+
+    <script>
+        document.querySelector('.auth-form').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Пароли не совпадают! Пожалуйста, проверьте введенные данные.');
+                return false;
+            }
+            
+            if (password.length < 6) {
+                e.preventDefault();
+                alert('Пароль должен содержать не менее 6 символов.');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

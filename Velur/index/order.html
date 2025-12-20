@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/order.css">
+    <title>Оформление заказа - Velur</title>
+</head>
+<body>
+    <div class="order-container">
+        <header class="order-header">
+            <h1>Оформление заказа</h1>
+            <p class="order-subtitle">Заполните форму ниже для оформления заказа</p>
+        </header>
+
+        <main class="order-main">
+            <div class="order-summary">
+                <h2>Вы заказываете:</h2>
+                <div class="product-summary">
+                    <h3>{{ .ProductName }}</h3>
+                    <p>{{ .Category }}</p>
+                </div>
+            </div>
+
+            <form action="/order" method="POST" class="order-form">
+                <input type="hidden" name="product_name" value="{{ .ProductName }}">
+                <input type="hidden" name="product_category" value="{{ .Category }}">
+                
+                <div class="form-section">
+                    <h3>Контактная информация</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="first_name">Имя*</label>
+                            <input type="text" id="first_name" name="first_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_name">Фамилия*</label>
+                            <input type="text" id="last_name" name="last_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="middle_name">Отчество</label>
+                            <input type="text" id="middle_name" name="middle_name">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Телефон*</label>
+                        <input type="tel" id="phone" name="phone" required 
+                               pattern="[0-9]{10,15}" 
+                               placeholder="XXXXXXXXXXX">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Информация о заказе</h3>
+                    <div class="form-group">
+                        <label for="quantity">Количество*</label>
+                        <input type="number" id="quantity" name="quantity" 
+                               required min="1" value="1">
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Адрес доставки</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="region">Область/Край*</label>
+                            <input type="text" id="region" name="region" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Город*</label>
+                            <input type="text" id="city" name="city" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="street">Улица*</label>
+                            <input type="text" id="street" name="street" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="house">Дом*</label>
+                            <input type="text" id="house" name="house" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="apartment">Квартира</label>
+                            <input type="text" id="apartment" name="apartment">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-order">Оформить заказ</button>
+                    <a href="/" class="cancel-order">Отменить</a>
+                </div>
+            </form>
+        </main>
+
+        <footer class="order-footer">
+            <p>© 2025 Velur - Магазин женской одежды. Все права защищены.</p>
+            <p>По вопросам заказа обращайтесь по телефону: +7 (900) 100-00-00</p>
+        </footer>
+    </div>
+</body>
+</html>

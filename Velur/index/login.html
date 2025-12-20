@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../assets/css/auth.css">
+    <title>Вход в аккаунт - Velur</title>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <a href="/" class="logo-link">
+                <img src="../assets/photo/логотип Velur.png" alt="Velur" class="auth-logo">
+            </a>
+            <h1>Вход в аккаунт</h1>
+            <p class="auth-subtitle">Добро пожаловать в Velur</p>
+        </div>
+
+        <div class="auth-form-container">
+            <form action="/login" method="POST" class="auth-form">
+                {{ if .ErrorMessage }}
+                    <div class="error-message">
+                        {{ .ErrorMessage }}
+                    </div>
+                {{ end }}
+                
+                <div class="form-group">
+                    <label for="username">Имя пользователя:</label>
+                    <input type="text" id="username" name="username" 
+                           placeholder="Введите ваш логин" 
+                           class="form-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" name="password" 
+                           placeholder="Введите ваш пароль" 
+                           class="form-input" required>
+                </div>
+
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" name="remember"> Запомнить меня
+                    </label>
+                    <a href="#forgot-password" class="forgot-password">Забыли пароль?</a>
+                </div>
+
+                <button type="submit" class="auth-button">Войти</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Ещё нет аккаунта? <a href="/registration">Зарегистрироваться</a></p>
+                <p class="back-home"><a href="/">← Вернуться на главную</a></p>
+            </div>
+        </div>
+
+        <div class="auth-benefits">
+            <h3>Преимущества аккаунта:</h3>
+            <ul class="benefits-list">
+                <li>Быстрое оформление заказов</li>
+                <li>Сохранение избранных товаров</li>
+                <li>История покупок</li>
+                <li>Специальные предложения</li>
+                <li>Быстрая доставка</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer class="auth-page-footer">
+        <p>© 2025 Velur - Магазин женской одежды. Все права защищены.</p>
+    </footer>
+</body>
+</html>

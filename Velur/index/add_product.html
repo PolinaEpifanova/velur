@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Управление товарами - Velur</title>
+    <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Админ-панель | Velur</h1>
+            <ul>
+                <li><a href="/">На главную</a></li>
+                <li><a href="/logout">Выйти</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Добавить новый товар одежды</h2>
+        <form action="/admin/add-clothing" method="post" enctype="multipart/form-data">
+            <label for="name">Название:</label>
+            <input type="text" id="name" name="name" required><br>
+        
+            <label for="description">Описание:</label>
+            <textarea id="description" name="description" required></textarea><br>
+        
+            <label for="price">Цена (₽):</label>
+            <input type="number" id="price" name="price" step="0.01" min="0" required><br>
+        
+            <label for="image">Изображение:</label>
+            <input type="file" id="image" name="image" accept="image/*" required><br>
+
+            <label for="size">Размер:</label>
+            <select id="size" name="size" required>
+                <option value="">Выберите размер</option>
+                <option value="XS">XS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+                <option value="XXL">XXL</option>
+            </select><br>
+
+            <label for="color">Цвет:</label>
+            <input type="text" id="color" name="color" placeholder="Красный, черный, белый..." required><br>
+
+            <label for="material">Материал:</label>
+            <input type="text" id="material" name="material" placeholder="Хлопок, шёлк, шерсть..." required><br>
+
+            <label for="type">Тип одежды:</label>
+            <select id="type" name="type" required>
+                <option value="">Выберите тип</option>
+                <option value="Платье">Платье</option>
+                <option value="Блузка">Блузка</option>
+                <option value="Юбка">Юбка</option>
+                <option value="Брюки">Брюки</option>
+                <option value="Куртка">Куртка</option>
+                <option value="Пальто">Пальто</option>
+                <option value="Топ">Топ</option>
+                <option value="Кардиган">Кардиган</option>
+            </select><br>
+
+            <label for="season">Сезон:</label>
+            <select id="season" name="season" required>
+                <option value="">Выберите сезон</option>
+                <option value="Лето">Лето</option>
+                <option value="Зима">Зима</option>
+                <option value="Демисезон">Демисезон</option>
+                <option value="Всесезон">Всесезон</option>
+            </select><br>
+
+            <button type="submit">Добавить одежду</button>
+        </form>
+
+        <h2>Существующая одежда</h2>
+        <section id="existing-products">
+            {{ range .Clothes }}
+            <div class="product">
+                <h3>{{ .Name }}</h3>
+                <img src="{{ .ImageURL }}" alt="{{ .Name }}" style="width: 100px; height: auto;">
+                <p>{{ .Description }}</p>
+                <p><strong>Размер:</strong> {{ .Size }} | <strong>Цвет:</strong> {{ .Color }}</p>
+                <p><strong>Цена:</strong> {{ .Price }} ₽</p>
+                <form action="/admin/delete-clothing/{{ .ID }}" method="post">
+                    <button type="submit">Удалить</button>
+                </form>
+            </div>
+            {{ end }}
+        </section>
+
+        <h2>Добавить новый аксессуар</h2>
+        <form action="/admin/add-accessory" method="post" enctype="multipart/form-data">
+            <label for="name">Название:</label>
+            <input type="text" id="name" name="name" required><br>
+        
+            <label for="description">Описание:</label>
+            <textarea id="description" name="description" required></textarea><br>
+        
+            <label for="price">Цена (₽):</label>
+            <input type="number" id="price" name="price" step="0.01" min="0" required><br>
+        
+            <label for="image">Изображение:</label>
+            <input type="file" id="image" name="image" accept="image/*" required><br>
+
+            <label for="type">Тип аксессуара:</label>
+            <select id="type" name="type" required>
+                <option value="">Выберите тип</option>
+                <option value="Сумка">Сумка</option>
+                <option value="Ремень">Ремень</option>
+                <option value="Шарф">Шарф</option>
+                <option value="Шляпа">Шляпа</option>
+                <option value="Украшения">Украшения</option>
+                <option value="Бижутерия">Бижутерия</option>
+                <option value="Платок">Платок</option>
+                <option value="Зонт">Зонт</option>
+            </select><br>
+
+            <label for="color">Цвет:</label>
+            <input type="text" id="color" name="color" placeholder="Золотой, серебряный, черный..." required><br>
+
+            <label for="material">Материал:</label>
+            <input type="text" id="material" name="material" placeholder="Кожа, металл, ткань..." required><br>
+
+            <label for="target">Назначение:</label>
+            <select id="target" name="target" required>
+                <option value="">Выберите назначение</option>
+                <option value="Для волос">Для волос</option>
+                <option value="Для шеи">Для шеи</option>
+                <option value="Для рук">Для рук</option>
+                <option value="Для ног">Для ног</option>
+                <option value="Для тела">Для тела</option>
+                <option value="Аксессуар">Аксессуар</option>
+            </select><br>
+
+            <button type="submit">Добавить аксессуар</button>
+        </form>
+
+        <h2>Существующие аксессуары</h2>
+        <section id="existing-accessories">
+            {{ range .Accessories }}
+            <div class="product">
+                <h3>{{ .Name }}</h3>
+                <img src="{{ .ImageURL }}" alt="{{ .Name }}" style="width: 100px; height: auto;">
+                <p>{{ .Description }}</p>
+                <p><strong>Тип:</strong> {{ .Type }} | <strong>Цвет:</strong> {{ .Color }}</p>
+                <p><strong>Цена:</strong> {{ .Price }} ₽</p>
+                <form action="/admin/delete-accessory/{{ .ID }}" method="post">
+                    <button type="submit">Удалить</button>
+                </form>
+            </div>
+            {{ end }}
+        </section>
+    </main>
+</body>
+</html>
