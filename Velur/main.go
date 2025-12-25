@@ -668,9 +668,10 @@ func main() {
 	r.HandleFunc("/order/accessory/{id:[0-9]+}", orderHandler).Methods("GET")
 	r.HandleFunc("/order", submitOrderHandler).Methods("POST")
 
-	log.Println("Запуск веб-сервера магазина Velur на http://localhost:9090")
-	err := http.ListenAndServe(":9090", r)
+	log.Println("Запуск веб-сервера магазина Velur на http://localhost:8080")
+	err := http.ListenAndServe(":8080", r)
 	if err != nil {
 		log.Fatal("Ошибка при запуске сервера:", err)
 	}
 }
+
