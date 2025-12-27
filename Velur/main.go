@@ -19,7 +19,6 @@ import (
 	"golangify.com/snippetbox/products"
 )
 
-// Шаблоны
 var (
 	marketTpl       = template.Must(template.ParseFiles("index/market.html"))
 	aboutTpl        = template.Must(template.ParseFiles("index/about.html"))
@@ -50,7 +49,6 @@ func initDB() {
 
 	log.Println("Успешное подключение к базе данных")
 
-	// Создаём таблицы, если их нет
 	createClothesTable()
 	createAccessoriesTable()
 	createUsersTable()
@@ -144,7 +142,6 @@ func createOrdersTable() {
 }
 
 func loadProducts() {
-	// Загрузка одежды
 	rows, err := db.Query("SELECT id, name, description, image_url, price, size, color, material, type, season FROM clothes")
 	if err != nil {
 		log.Println("Ошибка при загрузке одежды:", err)
@@ -166,7 +163,6 @@ func loadProducts() {
 		products.Clothes[clothing.ID] = clothing
 	}
 
-	// Загрузка аксессуаров
 	rowsAccessories, err := db.Query("SELECT id, name, description, image_url, price, type, color, material, target FROM accessories")
 	if err != nil {
 		log.Println("Ошибка при загрузке аксессуаров:", err)
@@ -191,7 +187,6 @@ func loadProducts() {
 	log.Printf("Загружено %d товаров одежды и %d аксессуаров", len(products.Clothes), len(products.Accessories))
 }
 
-// Обработчики страниц товаров
 func clothingHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	productID := vars["id"]
@@ -226,12 +221,10 @@ func accessoryHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Оформление заказа - КЛЮЧЕВЫЕ ИЗМЕНЕНИЯ
 func orderHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	productID := vars["id"]
 
-	// Сначала проверяем одежду
 	clothing, exists := products.Clothes[productID]
 	if exists {
 		err := orderTpl.Execute(w, map[string]interface{}{
@@ -246,7 +239,6 @@ func orderHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Затем проверяем аксессуары
 	accessory, existsAccessory := products.Accessories[productID]
 	if existsAccessory {
 		err := orderTpl.Execute(w, map[string]interface{}{
@@ -264,10 +256,8 @@ func orderHandler(w http.ResponseWriter, r *http.Request) {
 	http.NotFound(w, r)
 }
 
-// Обработка отправки заказа - ИСПРАВЛЕНО
 func submitOrderHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
-		// Получаем данные из формы
 		productName := r.FormValue("product_name")
 		productCategory := r.FormValue("product_category")
 		firstName := r.FormValue("first_name")
@@ -288,8 +278,6 @@ func submitOrderHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Ошибка при преобразовании количества", http.StatusBadRequest)
 			return
 		}
-
-		// Сохраняем заказ в БД (ВКЛЮЧАЕМ product_category)
 		_, err = db.Exec(`
 			INSERT INTO orders (product_name, product_category, first_name, last_name, middle_name, phone, quantity, region, city, street, house, apartment) 
 			VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`,
@@ -306,7 +294,6 @@ func submitOrderHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Админ-панель: добавление товаров
 func addClothing(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		name := r.FormValue("name")
@@ -325,7 +312,6 @@ func addClothing(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// Обработка загрузки изображения
 		file, header, err := r.FormFile("image")
 		if err != nil {
 			log.Println("Ошибка при получении файла:", err)
@@ -371,7 +357,6 @@ func addClothing(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// Обновляем кэш
 		products.Clothes[fmt.Sprint(id)] = products.Clothing{
 			ID:          fmt.Sprint(id),
 			Name:        name,
@@ -469,7 +454,6 @@ func addAccessory(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Удаление товаров
 func deleteClothing(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	productID := vars["id"]
@@ -502,7 +486,6 @@ func deleteAccessory(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/admin", http.StatusSeeOther)
 }
 
-// Основные страницы
 func marketHandler(w http.ResponseWriter, r *http.Request) {
 	loadProducts()
 
@@ -547,7 +530,6 @@ func aboutHandler(w http.ResponseWriter, r *http.Request) {
 	aboutTpl.Execute(w, data)
 }
 
-// Аутентификация
 func registrationHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		username := r.FormValue("username")
@@ -647,11 +629,9 @@ func main() {
 
 	r := mux.NewRouter()
 
-	// Статические файлы
 	fs := http.FileServer(http.Dir("assets"))
 	r.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", fs))
 
-	// Маршруты
 	r.HandleFunc("/", marketHandler).Methods("GET")
 	r.HandleFunc("/about", aboutHandler).Methods("GET")
 	r.HandleFunc("/registration", registrationHandler).Methods("GET", "POST")
@@ -668,10 +648,11 @@ func main() {
 	r.HandleFunc("/order/accessory/{id:[0-9]+}", orderHandler).Methods("GET")
 	r.HandleFunc("/order", submitOrderHandler).Methods("POST")
 
-	log.Println("Запуск веб-сервера магазина Velur на http://localhost:8080")
-	err := http.ListenAndServe(":8080", r)
+	log.Println("Запуск веб-сервера магазина Velur на http://localhost:7070")
+	err := http.ListenAndServe(":7070", r)
 	if err != nil {
 		log.Fatal("Ошибка при запуске сервера:", err)
 	}
 }
+
 
