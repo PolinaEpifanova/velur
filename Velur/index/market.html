@@ -9,30 +9,25 @@
 </head>
 <body>
     <header>
-        <nav aria-label="Главное меню">
-            <div class="nav-left">
-                <img id="logo" src="assets/photo/логотип Velur.png" alt="Логотип Velur">
-                <ul class="main-menu">
-                    <li><a href="/" class="active">Каталог</a></li>
-                    <li><a href="/about">О нас</a></li>
-                    <li><a href="#clothing">Одежда</a></li>
-                    <li><a href="#accessories">Аксессуары</a></li>
-                </ul>
-            </div>
-            <div class="nav-right">
-                <ul class="user-menu">
-                    {{ if .Username }}
-                        <li><span class="welcome-text">Добро пожаловать, {{ .Username }}!</span></li>
-                        {{ if eq .Role "admin" }}
-                            <li><a href="/admin" class="admin-link">Админ-панель</a></li>
-                        {{ end }}
-                        <li><a href="/logout" class="logout-link">Выйти</a></li>
-                    {{ else }}
-                        <li><a href="/login" class="login-link">Войти</a></li>
-                        <li><a href="/registration" class="register-link">Регистрация</a></li>
+        <nav>
+            <img id="logo" src="../assets/photo/логотип Velur.png" alt="Логотип Velur">
+            <ul class="but">
+                <li><a href="/">Каталог</a></li>
+                <li><a href="/about">О нас</a></li>
+                <li><a href="/#clothing">Одежда</a></li>
+                <li><a href="/#accessories">Аксессуары</a></li>
+            </ul>
+            <ul class="korz">
+                {{ if .Username }}
+                    <li>Добро пожаловать, {{ .Username }}!</li>
+                    {{ if eq .Role "admin" }}
+                        <li><a href="/admin">Админ-панель</a></li>
                     {{ end }}
-                </ul>
-            </div>
+                    <li><a href="/logout">Выйти</a></li>
+                {{ else }}
+                    <li><a href="/login">Войти</a></li>
+                {{ end }}
+            </ul>
         </nav>
     </header>
 
@@ -96,4 +91,5 @@
         <p class="contact">Телефон: +7 (XXX) XXX-XX-XX | Email: info@velur.ru</p>
     </footer>
 </body>
+
 </html>
